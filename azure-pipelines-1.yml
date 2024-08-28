@@ -16,11 +16,18 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: NuGetToolInstaller@1
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 4.9.x'
+  inputs:
+    versionSpec: 4.9.x
 
 - task: NuGetCommand@2
+  displayName: 'NuGet restore'
   inputs:
-    restoreSolution: '$(solution)'
+    restoreSolution: '$(Pipeline.TriggerDirectory)/Library.sln'
+    vstsFeed: '[your feed here]'
+    noCache: true
+    
 
 - task: VSBuild@1
   inputs:
